@@ -36,16 +36,16 @@ echo 'export LC_IDENTIFICATION=en_IL.UTF-8' >> ~/.bashrc
 source ~/.bashrc
 locale  # check for UTF-8
 
-# Add the ROS 2 apt repository
+# Add the ROS 2 apt repository
 # You will need to add the ROS 2 apt repository to your system.
 # First ensure that the Ubuntu Universe repository is enabled.
 sudo apt install -y software-properties-common
 sudo add-apt-repository universe
 
-sudo apt update && sudo apt install locales
-sudo locale-gen en_US en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-export LANG=en_US.UTF-8
+#sudo apt update && sudo apt install locales
+#sudo locale-gen en_US en_US.UTF-8
+#sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+#export LANG=en_US.UTF-8
 
 # Add the ROS 2 apt repository
 sudo apt-get update
