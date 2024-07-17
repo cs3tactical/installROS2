@@ -16,6 +16,24 @@ ROS_DISTRO=humble
 ROS_BUILD_ROOT=/opt/ros/${ROS_DISTRO}-src
 ROS_INSTALL_ROOT=/opt/ros/${ROS_DISTRO}
 
+
+# Explicitly set UTF-8
+echo 'export LANG=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LANGUAGE=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_CTYPE=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_NUMERIC=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_TIME=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_COLLATE=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_MONETARY=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_MESSAGES=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_PAPER=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_NAME=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_ADDRESS=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_TELEPHONE=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_MEASUREMENT=en_IL.UTF-8' >> ~/.bashrc
+echo 'export LC_IDENTIFICATION=en_IL.UTF-8' >> ~/.bashrc
+
+source ~/.bashrc
 locale  # check for UTF-8
 
 # Add the ROS 2 apt repository
