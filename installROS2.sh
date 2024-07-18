@@ -10,7 +10,7 @@
 #   https://github.com/dusty-nv/jetson-containers
 # 
 
-ROS_PKG=ros_base
+ROS_PKG=perception
 ROS_DISTRO=humble
 # Core ROS2 workspace - the "underlay"
 ROS_BUILD_ROOT=/opt/ros/${ROS_DISTRO}-src
@@ -104,7 +104,8 @@ python3 -m pip install -U \
    flake8-quotes \
    "pytest>=5.3" \
    pytest-repeat \
-   pytest-rerunfailures
+   pytest-rerunfailures \
+   libopencv-dev
 
 # compile yaml-cpp-0.8, which some ROS packages may use (but is not in the 20.04 apt repo)
 git clone --branch 0.8.0 https://github.com/jbeder/yaml-cpp yaml-cpp-0.8 && \
@@ -123,7 +124,7 @@ git clone --branch 0.8.0 https://github.com/jbeder/yaml-cpp yaml-cpp-0.8 && \
 
 # https://answers.ros.org/question/325245/minimal-ros2-installation/?answer=325249#post-id-325249
 sudo mkdir -p ${ROS_BUILD_ROOT}/src && \
-  cd ${ROS_BUILD_ROOT}
+cd ${ROS_BUILD_ROOT}
 sudo sh -c "rosinstall_generator --deps --rosdistro ${ROS_DISTRO} ${ROS_PKG} launch_xml launch_yaml example_interfaces > ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall && \
 cat ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall && \
     vcs import src < ros2.${ROS_DISTRO}.${ROS_PKG}.rosinstall"
@@ -141,7 +142,10 @@ sudo apt upgrade
     cd ${ROS_BUILD_ROOT} 
 sudo rosdep init  
     rosdep update && \
-    rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y --skip-keys "console_bridge fastrtps rfastcdr rti-connext-dds-6.0.1 urdfdom_headers" --os=ubuntu:jammy && \
+    sudo rm -r src/vision_msgs/vision_msgs_rviz_plugins #build fail for that
+    # rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y --skip-keys "console_bridge fastrtps rfastcdr rti-connext-dds-6.0.1 urdfdom_headers" --os=ubuntu:jammy && \
+    rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y --skip-keys "console_bridge fastrtps rfastcdr rti-connext-dds-6.0.1 urdfdom_headers" --os=ubuntu:focal && \
+
     sudo rm -rf /var/lib/apt/lists/*
 
 # build it!
