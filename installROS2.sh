@@ -85,7 +85,10 @@ sudo apt-get install -y --no-install-recommends \
 		libasio-dev \
 		libtinyxml2-dev \
 		libcunit1-dev \
-		ros-dev-tools
+		ros-dev-tools \
+                qtdeclarative5-dev \
+		qtbase5-dev
+
 
 sudo rm -rf /var/lib/apt/lists/*
   
@@ -112,6 +115,10 @@ git clone --branch 0.8.0 https://github.com/jbeder/yaml-cpp yaml-cpp-0.8 && \
     make -j$(nproc) && \
     sudo cp libyaml-cpp.so.0.8.0 /usr/lib/aarch64-linux-gnu/ && \
     sudo ln -s /usr/lib/aarch64-linux-gnu/libyaml-cpp.so.0.8.0 /usr/lib/aarch64-linux-gnu/libyaml-cpp.so.0.8
+
+# What breaks:
+# stderr: vision_msgs_rviz_plugins
+# rviz_commonConfig.cmake
 
 
 # https://answers.ros.org/question/325245/minimal-ros2-installation/?answer=325249#post-id-325249
@@ -143,7 +150,7 @@ sudo mkdir -p ${ROS_INSTALL_ROOT}
 sudo colcon build --merge-install --install-base ${ROS_INSTALL_ROOT}  --packages-select rclpy rclcpp
 # We do this twice to make sure everything gets built
 # For some reason, this has been an issue
-sudo colcon build --merge-install --install-base ${ROS_INSTALL_ROOT}
+sudo colcon build --merge-install --install-base ${ROS_INSTALL_ROOT} --packages-skip vision_msgs_rviz_plugins
 
 # Using " expands environment variable immediately
 echo "source $ROS_INSTALL_ROOT/setup.bash" >> ~/.bashrc 
