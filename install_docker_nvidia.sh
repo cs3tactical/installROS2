@@ -77,9 +77,9 @@ sudo apt-get update -y
 check_success "Updating package lists for NVIDIA"
 
 # Install NVIDIA drivers
-echo "Installing NVIDIA driver..."
-sudo apt-get install -y nvidia-driver-470  # Change version as per your requirements
-check_success "NVIDIA driver installation"
+# echo "Installing NVIDIA driver..."
+# sudo apt-get install -y nvidia-driver-470  # Change version as per your requirements
+# check_success "NVIDIA driver installation"
 
 # Install nvidia-container-toolkit
 echo "Installing NVIDIA Container Toolkit..."
@@ -91,19 +91,23 @@ echo "Configuring NVIDIA runtime..."
 sudo nvidia-ctk runtime configure --runtime=docker
 check_success "Configuring NVIDIA runtime"
 
+sudo usermod -aG docker $USER
+newgrp docker
+
 # Restart Docker to apply changes
 echo "Restarting Docker service..."
-sudo systemctl restart docker
+sudo systemctl daemon-reload && sudo systemctl restart docker
+
 check_success "Restarting Docker service"
 
 # Step 3: Verify NVIDIA drivers
-echo "Verifying NVIDIA driver installation..."
-if command -v nvidia-smi &> /dev/null; then
-    nvidia-smi
-    echo "NVIDIA driver installation and verification successful!"
-else
-    echo "Error: nvidia-smi command not found! NVIDIA driver installation failed!"
-    exit 1
-fi
+#echo "Verifying NVIDIA driver installation..."
+#if command -v nvidia-smi &> /dev/null; then
+#    nvidia-smi
+#    echo "NVIDIA driver installation and verification successful!"
+#else
+#    echo "Error: nvidia-smi command not found! NVIDIA driver installation failed!"
+#    exit 1
+#fi
 
-echo "Docker and NVIDIA driver installation completed successfully!"
+echo "Docker installation completed successfully!"
